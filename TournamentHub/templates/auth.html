@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Регистрация' if mode=='register' else 'Вход' }} — TournamentHub{% endblock %}
+{% block content %}
+<div class="auth-wrap"><section class="auth-panel"><span class="eyebrow">TOURNAMENTHUB ACCOUNT</span>
+<h1>{{ 'Создай аккаунт' if mode=='register' else 'С возвращением' }}</h1>
+<p class="muted">{{ 'Присоединяйся к турнирам и собирай команду.' if mode=='register' else 'Войди, чтобы продолжить свой путь.' }}</p>
+<form method="post" class="form">
+{% if mode=='register' %}
+<label>Отображаемое имя<input name="display_name" value="{{ values.get('display_name','') }}" required minlength="2"></label>{% if errors.get('display_name') %}<small class="field-error">{{ errors.display_name }}</small>{% endif %}
+<label>Имя пользователя<input name="username" value="{{ values.get('username','') }}" required minlength="3" autocomplete="username"></label>{% if errors.get('username') %}<small class="field-error">{{ errors.username }}</small>{% endif %}
+<label>Email<input type="email" name="email" value="{{ values.get('email','') }}" required autocomplete="email"></label>{% if errors.get('email') %}<small class="field-error">{{ errors.email }}</small>{% endif %}
+<label>Пароль<input type="password" name="password" required minlength="8" autocomplete="new-password"></label>{% if errors.get('password') %}<small class="field-error">{{ errors.password }}</small>{% endif %}
+{% else %}
+<label>Логин или email<input name="identity" value="{{ values.get('identity','') }}" required autocomplete="username"></label>
+<label>Пароль<input type="password" name="password" required autocomplete="current-password"></label>
+{% if errors.get('identity') %}<small class="field-error">{{ errors.identity }}</small>{% endif %}
+{% endif %}
+<button class="btn primary full" type="submit">{{ 'Зарегистрироваться' if mode=='register' else 'Войти в аккаунт' }} <span>→</span></button>
+</form>
+<p class="auth-switch">{{ 'Уже есть аккаунт?' if mode=='register' else 'Впервые здесь?' }} <a href="{{ url_for('login' if mode=='register' else 'register') }}">{{ 'Войти' if mode=='register' else 'Создать аккаунт' }}</a></p>
+</section><aside class="auth-aside"><div class="auth-symbol">TH<span>✦</span></div><h2>Победы начинаются<br>с команды.</h2><p>Твой следующий турнир уже ждёт.</p></aside></div>
+{% endblock %}

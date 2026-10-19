@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}TournamentHub — турниры{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow">ПЛАТФОРМА ТУРНИРОВ</span>
+    <h1>Твоя игра.<br><span>Твоя команда.</span><br>Твоя победа.</h1>
+    <p>Создавай команды, участвуй в турнирах и проходи путь от первого матча до чемпионского титула.</p>
+    <div class="hero-actions"><a class="btn primary" href="{{ url_for('tournament_list') }}">Найти турнир <span>↗</span></a>
+    {% if current_user and current_user.role in ['organizer','admin'] %}<a class="btn ghost" href="{{ url_for('create_tournament') }}">＋ Создать турнир</a>{% elif not current_user %}<a class="btn ghost" href="{{ url_for('register') }}">Создать аккаунт</a>{% endif %}</div>
+  </div>
+  <div class="hero-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="hero-emblem">TH<span>✦</span></div><div class="floating-tag tag-top">LIVE MATCH</div><div class="floating-tag tag-bottom">NEXT LEVEL</div></div>
+</section>
+<section class="section-heading"><div><span class="eyebrow">ВЫБИРАЙ СВОЙ ВЫЗОВ</span><h2>Популярные турниры</h2></div><a class="text-link" href="{{ url_for('tournament_list') }}">Все турниры <span>→</span></a></section>
+{% if tournaments %}
+<div class="tournament-grid">
+{% for t in tournaments %}
+<article class="tournament-card">
+  <div class="card-top"><span class="game-chip">{{ t.game }}</span><span class="status status-{{ t.status }}">{{ {'draft':'Черновик','registration':'Регистрация','in_progress':'Идёт','completed':'Завершён'}[t.status] }}</span></div>
+  <h3>{{ t.title }}</h3><p class="muted">Организатор: {{ t.organizer_name }}</p>
+  <div class="card-stats"><div><small>КОМАНД</small><strong>{{ t.accepted_count }} / {{ t.capacity }}</strong></div><div><small>СТАРТ</small><strong>{{ t.starts_at.replace('T',' ') }}</strong></div></div>
+  <a class="btn card-button" href="{{ url_for('tournament_detail',tid=t.id) }}">Открыть турнир <span>→</span></a>
+</article>
+{% endfor %}
+</div>
+{% else %}<div class="empty-state"><div class="empty-icon">✦</div><h3>Пока нет турниров</h3><p>Здесь появятся новые соревнования.</p></div>{% endif %}
+<section class="feature-strip"><div><span>01</span><strong>Собери команду</strong><p>Пригласи игроков и подтверди состав.</p></div><div><span>02</span><strong>Попади в сетку</strong><p>Подай заявку и дождись решения организатора.</p></div><div><span>03</span><strong>Забери победу</strong><p>Играй матчи и двигайся к финалу.</p></div></section>
+{% endblock %}
