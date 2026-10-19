@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}TournamentHub{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">T</span>Tournament<span>Hub</span></a>
+  <nav>
+    <a href="{{ url_for('tournament_list') }}">Турниры</a>
+    {% if current_user %}
+      <a href="{{ url_for('teams') }}">Мои команды</a>
+      {% if current_user.role in ['organizer','admin'] %}<a href="{{ url_for('create_tournament') }}">Создать турнир</a>{% endif %}
+      {% if current_user.role == 'admin' %}<a href="{{ url_for('admin') }}">Админ</a>{% endif %}
+      <a href="{{ url_for('profile') }}">Профиль</a>
+      <form class="inline-form" method="post" action="{{ url_for('logout') }}"><button class="nav-logout">Выйти</button></form>
+    {% else %}
+      <a href="{{ url_for('login') }}">Войти</a><a class="nav-cta" href="{{ url_for('register') }}">Регистрация</a>
+    {% endif %}
+  </nav>
+</header>
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<section class="flash-stack" aria-live="polite">
+      {% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}
+    </section>{% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="footer"><span>© 2026 TournamentHub</span><span>Играй честно. Побеждай вместе.</span></footer>
+</body>
+</html>
