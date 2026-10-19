@@ -567,3 +567,26 @@ with app.app_context():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
+    from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+# Если ты используешь SQLAlchemy:
+# from models import Tournament, User
+
+admin = Admin(app, name='TournamentHub Admin', template_mode='bootstrap3')
+
+# Добавь свои модели, чтобы они появились в админке
+# admin.add_view(ModelView(Tournament, db.session))
+# admin.add_view(ModelView(User, db.session))
+
+from flask_admin import Admin, AdminIndexView
+from flask import redirect, url_for
+
+class MyAdminIndexView(AdminIndexView):
+    def is_accessible(self):
+        # Простейшая проверка: пускаем только если есть переменная окружения ADMIN=1
+        # Лучше сделать нормальный логин, но для старта сойдёт
+        return True  # Пока разрешим всем (для теста)
+
+admin = Admin(app, name='TournamentHub Admin', index_view=MyAdminIndexView())
+
