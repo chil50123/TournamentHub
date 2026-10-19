@@ -96,6 +96,7 @@ def init_db():
     conn.commit()
     conn.close()
 
+init_db()
 @app.before_request
 def load_user():
     g.user = None
@@ -565,3 +566,9 @@ def seed_command():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
+
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+# ...
+admin = Admin(app, name='TournamentHub Admin')  # Создание
+admin.add_view(ModelView(Tournament, db.session)) # Добавление модели
