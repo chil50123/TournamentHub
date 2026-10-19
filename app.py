@@ -570,7 +570,7 @@ if __name__ == "__main__":
 # Если ты используешь SQLAlchemy:
 # from models import Tournament, User
 
-admin = Admin(app, name='TournamentHub Admin', template_mode='bootstrap3')
+admin = admin(app, name='TournamentHub Admin', template_mode='bootstrap3')
 
 # Добавь свои модели, чтобы они появились в админке
 # admin.add_view(ModelView(Tournament, db.session))
