@@ -562,6 +562,8 @@ def seed_command():
     conn.commit(); conn.close()
     print("Демо-данные добавлены. Логины и пароли см. README.md.")
 
-if __name__ == "__main__":
+with app.app_context():
     init_db()
+
+if __name__ == "__main__":
     app.run(debug=True)
