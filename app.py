@@ -567,9 +567,6 @@ with app.app_context():
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
-    from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
 # Если ты используешь SQLAlchemy:
 # from models import Tournament, User
 
