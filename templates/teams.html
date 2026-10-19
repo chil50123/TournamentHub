@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Мои команды — TournamentHub{% endblock %}
+{% block content %}
+<div class="page-head"><span class="eyebrow">SQUAD MANAGEMENT</span><h1>Мои команды</h1><p class="muted">Создай команду и приглашай игроков по email.</p></div>
+<div class="two-col"><section class="panel"><h2>Создать команду</h2><form method="post" class="form"><label>Название команды<input name="name" placeholder="Например, Neon Wolves" minlength="2" required></label><button class="btn primary">＋ Создать команду</button></form></section>
+<section class="panel"><h2>Команды, где вы состоите</h2>{% if teams %}<div class="simple-list">{% for team in teams %}<a class="simple-row link-row" href="{{ url_for('team_detail',team_id=team.id) }}"><div><strong>{{ team.name }}</strong><small>{{ 'Приглашение' if team.status=='invited' else 'Активный состав' }}</small></div><span>→</span></a>{% endfor %}</div>{% else %}<p class="muted">Вы пока не состоите в командах.</p>{% endif %}</section></div>
+{% endblock %}

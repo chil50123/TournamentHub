@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "TournamentHub (Flask)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "flask",
+      "args": ["--app", "app", "run", "--debug", "--host", "127.0.0.1", "--port", "5000"],
+      "jinja": true,
+      "justMyCode": true,
+      "env": {
+        "FLASK_APP": "app",
+        "FLASK_DEBUG": "1"
+      }
+    }
+  ]
+}

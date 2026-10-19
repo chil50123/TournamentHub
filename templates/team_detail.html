@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}{{ team.name }} — TournamentHub{% endblock %}
+{% block content %}
+<div class="page-head"><a class="back-link" href="{{ url_for('teams') }}">← Мои команды</a><span class="eyebrow">TEAM ROSTER</span><h1>{{ team.name }}</h1><p class="muted">Капитан: {{ team.captain_name }}</p></div>
+<div class="two-col"><section class="panel"><h2>Состав команды</h2><div class="simple-list">{% for m in members %}<div class="simple-row"><div><strong>{{ m.display_name }}</strong><small>@{{ m.username }} · {{ m.email }}</small></div><span class="status status-{{ 'registration' if m.status=='active' else 'draft' }}">{{ {'active':'Участник','invited':'Приглашён','declined':'Отклонил'}[m.status] }}</span></div>{% endfor %}</div></section>
+{% if is_captain %}<section class="panel"><h2>Пригласить игрока</h2><p class="muted">Пользователь должен заранее зарегистрироваться на сайте.</p><form method="post" action="{{ url_for('invite',team_id=team.id) }}" class="form"><label>Email игрока<input type="email" name="email" placeholder="player@example.com" required></label><button class="btn primary">Отправить приглашение</button></form></section>{% endif %}</div>
+{% endblock %}

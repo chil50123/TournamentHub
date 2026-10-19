@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Администрирование — TournamentHub{% endblock %}
+{% block content %}
+<div class="page-head"><span class="eyebrow">CONTROL CENTER</span><h1>Пользователи</h1><p class="muted">Только администратор может назначать служебные роли.</p></div>
+<div class="panel table-wrap"><table><thead><tr><th>Пользователь</th><th>Email</th><th>Текущая роль</th><th>Изменить роль</th></tr></thead><tbody>
+{% for u in users %}<tr><td><strong>{{ u.display_name }}</strong><small>@{{ u.username }}</small></td><td>{{ u.email }}</td><td><span class="role-chip">{{ u.role }}</span></td><td><form method="post" action="{{ url_for('change_role',user_id=u.id) }}" class="inline-controls"><select name="role">{% for role in ['user','organizer','admin'] %}<option value="{{ role }}" {% if role==u.role %}selected{% endif %}>{{ role }}</option>{% endfor %}</select><button class="btn small primary">Сохранить</button></form></td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

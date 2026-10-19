@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Создать турнир — TournamentHub{% endblock %}
+{% block content %}
+<div class="page-head"><a class="back-link" href="{{ url_for('tournament_list') }}">← К турнирам</a><span class="eyebrow">ORGANIZER TOOLS</span><h1>Создать турнир</h1><p class="muted">Заполни параметры соревнования. После создания можно открыть регистрацию.</p></div>
+<section class="panel form-panel"><form method="post" class="form form-grid">
+<div class="wide"><label>Название турнира<input name="title" value="{{ values.get('title','') }}" placeholder="Например, Winter Cup 2026" required minlength="3"></label>{% if errors.get('title') %}<small class="field-error">{{ errors.title }}</small>{% endif %}</div>
+<div><label>Игра<input name="game" value="{{ values.get('game','') }}" placeholder="Counter-Strike 2" required></label>{% if errors.get('game') %}<small class="field-error">{{ errors.game }}</small>{% endif %}</div>
+<div><label>Размер команды<input type="number" name="team_size" min="1" max="20" value="{{ values.get('team_size','5') }}" required></label>{% if errors.get('team_size') %}<small class="field-error">{{ errors.team_size }}</small>{% endif %}</div>
+<div><label>Количество команд<select name="capacity" required>{% for n in [4,8,16] %}<option value="{{ n }}" {% if values.get('capacity','4')|string==n|string %}selected{% endif %}>{{ n }} команд</option>{% endfor %}</select></label>{% if errors.get('capacity') %}<small class="field-error">{{ errors.capacity }}</small>{% endif %}</div>
+<div><label>Дата и время турнира<input type="datetime-local" name="starts_at" value="{{ values.get('starts_at','') }}" required></label></div>
+<div><label>Дедлайн регистрации<input type="datetime-local" name="registration_deadline" value="{{ values.get('registration_deadline','') }}" required></label></div>
+<div><label>Статус при создании<select name="status"><option value="draft">Черновик</option><option value="registration" {% if values.get('status')=='registration' %}selected{% endif %}>Открыть регистрацию</option></select></label></div>
+<div class="wide"><label>Правила<textarea name="rules" rows="5" placeholder="Формат, ограничения, правила поведения..." required>{{ values.get('rules','') }}</textarea></label>{% if errors.get('rules') %}<small class="field-error">{{ errors.rules }}</small>{% endif %}</div>
+<div class="wide"><button class="btn primary" type="submit">Создать турнир <span>→</span></button></div>
+</form></section>
+{% endblock %}
