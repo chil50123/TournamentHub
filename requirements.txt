@@ -1,8 +1,2 @@
 Flask>=3.0,<4.0
 gunicorn
-
-from flask_cors import CORS
-
-CORS(app, origins=[
-    "https://tournament-hub-bice.vercel.app"
-])
